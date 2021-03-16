@@ -1,1 +1,1 @@
-# covid-availability
+# SpotifyQL
