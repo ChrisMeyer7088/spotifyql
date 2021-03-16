@@ -1,0 +1,25 @@
+{
+  "name": "spotifyql",
+  "version": "1.0.0",
+  "description": "A graphQL intermediary layer of spotify",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisMeyer7088/covid-availability.git"
+  },
+  "author": "Chris Meyer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChrisMeyer7088/covid-availability/issues"
+  },
+  "homepage": "https://github.com/ChrisMeyer7088/covid-availability#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0"
+  }
+}
