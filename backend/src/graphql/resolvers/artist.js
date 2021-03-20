@@ -31,10 +31,23 @@ const getRelatedArtists = async function(args, req) {
   return resp.data.artists;
 }
 
+const getAlbumsByAritstId = async function(args, req) {
+  const headers = header(req);
+  const params = {
+    offset: args.offset,
+    limit: args.limit,  
+    market: args.market,
+    include_groups: args.include_groups,
+  }
+  const resp = await axios.get(`${url}/${args.id}/albums`, { headers, params });
+  return resp.data.items;
+};
+
 const artist = {
   artist: getArtistById,
   artists: getArtistsById,
   relatedArtists: getRelatedArtists,
+  artistAlbums: getAlbumsByAritstId,
 };
 
 module.exports = artist;
