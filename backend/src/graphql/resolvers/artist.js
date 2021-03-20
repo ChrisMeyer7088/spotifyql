@@ -1,5 +1,6 @@
 const axios = require('axios').default;
-const spotifyBaseURL = 'https://api.spotify.com/v1';
+const { spotifyBaseURL } = require('../../config')
+const url = spotifyBaseURL + 'artists';
 
 function header(req) {
   let token = req.headers.authorization;
@@ -13,21 +14,50 @@ function header(req) {
 
 const getArtistById = async function(args, req) {
   const headers = header(req);
-  const resp = await axios.get(`${spotifyBaseURL}/artists/${args.id}`, { headers });
+  const resp = await axios.get(`${url}/${args.id}`, { headers });
   return resp.data;
 };
 
 const getArtistsById = async function(args, req) {
   const headers = header(req);
-  const params = { ids: args.ids };
-  const resp = await axios.get(`${spotifyBaseURL}/artists/${args.ids}`, { headers, params });
-  console.log(resp.data)
-  return resp.data;
+  const params = { ids: args.ids.toString() };
+  const resp = await axios.get(`${url}`, { headers, params });
+  return resp.data.artists;
+};
+
+const getRelatedArtists = async function(args, req) {
+  const headers = header(req);
+  const resp = await axios.get(`${url}/${args.id}/related-artists`, { headers });
+  return resp.data.artists;
+}
+
+const getAlbumsByAritstId = async function(args, req) {
+  const headers = header(req);
+  const params = {
+    offset: args.offset,
+    limit: args.limit,  
+    market: args.market,
+    include_groups: args.include_groups,
+  }
+  const resp = await axios.get(`${url}/${args.id}/albums`, { headers, params });
+  return resp.data.items;
+};
+
+const getArtistTopTracks = async function(args, req) {
+  const headers = header(req);
+  const params = {
+    market: args.market,
+  }
+  const resp = await axios.get(`${url}/${args.id}/top-tracks`, { headers, params });
+  return resp.data.tracks;
 };
 
 const artist = {
   artist: getArtistById,
   artists: getArtistsById,
+  relatedArtists: getRelatedArtists,
+  artistAlbums: getAlbumsByAritstId,
+  artistTopTracks: getArtistTopTracks,
 };
 
 module.exports = artist;
