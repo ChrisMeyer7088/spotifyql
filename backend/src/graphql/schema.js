@@ -6,6 +6,7 @@ const schema = buildSchema(`
     relatedArtists(id: ID!): [Artist],
     artists(ids: [ID!]!): [Artist],
     artistAlbums(id: ID!, market: String, limit: Int, offset: String, include_groups: String): [Album]
+    artistTopTracks(id: ID!, market: String!): [Track]
   },
   type Image {
     height: Int,
@@ -18,6 +19,9 @@ const schema = buildSchema(`
   },
   type External_Urls {
     spotify: String,
+  },
+  type External_ID {
+    isrc: String
   },
   type Artist {
     id: ID,
@@ -43,6 +47,25 @@ const schema = buildSchema(`
     release_date: String,
     release_date_precision: String,
     total_tracks: Int,
+    type: String,
+    uri: String
+  },
+  type Track {
+    album: Album,
+    artists: [Artist],
+    disc_number: Int,
+    duration_ms: Int,
+    explicit: Boolean,
+    external_ids: External_ID,
+    external_urls: External_Urls
+    href: String,
+    id: ID,
+    is_local: Boolean,
+    is_playable: Boolean,
+    name: String,
+    popularity: Int,
+    preview_url: String,
+    track_number: Int,
     type: String,
     uri: String
   }

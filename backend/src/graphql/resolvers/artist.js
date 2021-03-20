@@ -43,11 +43,21 @@ const getAlbumsByAritstId = async function(args, req) {
   return resp.data.items;
 };
 
+const getArtistTopTracks = async function(args, req) {
+  const headers = header(req);
+  const params = {
+    market: args.market,
+  }
+  const resp = await axios.get(`${url}/${args.id}/top-tracks`, { headers, params });
+  return resp.data.tracks;
+};
+
 const artist = {
   artist: getArtistById,
   artists: getArtistsById,
   relatedArtists: getRelatedArtists,
   artistAlbums: getAlbumsByAritstId,
+  artistTopTracks: getArtistTopTracks,
 };
 
 module.exports = artist;
