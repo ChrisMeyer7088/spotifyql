@@ -3,6 +3,7 @@ const { buildSchema } = require("graphql");
 const schema = buildSchema(`
   type Query {
     artist(id: ID!): Artist,
+    relatedArtists(id: ID!): [Artist],
     artists(ids: [ID!]!): [Artist],
   },
   enum SpotifyTypes {

@@ -1,5 +1,6 @@
 const axios = require('axios').default;
-const spotifyBaseURL = 'https://api.spotify.com/v1';
+const { spotifyBaseURL } = require('../../config')
+const url = spotifyBaseURL + 'artists';
 
 function header(req) {
   let token = req.headers.authorization;
@@ -13,20 +14,27 @@ function header(req) {
 
 const getArtistById = async function(args, req) {
   const headers = header(req);
-  const resp = await axios.get(`${spotifyBaseURL}/artists/${args.id}`, { headers });
+  const resp = await axios.get(`${url}/${args.id}`, { headers });
   return resp.data;
 };
 
 const getArtistsById = async function(args, req) {
   const headers = header(req);
   const params = { ids: args.ids.toString() };
-  const resp = await axios.get(`${spotifyBaseURL}/artists`, { headers, params });
+  const resp = await axios.get(`${url}`, { headers, params });
   return resp.data.artists;
 };
+
+const getRelatedArtists = async function(args, req) {
+  const headers = header(req);
+  const resp = await axios.get(`${url}/${args.id}/related-artists`, { headers });
+  return resp.data.artists;
+}
 
 const artist = {
   artist: getArtistById,
   artists: getArtistsById,
+  relatedArtists: getRelatedArtists,
 };
 
 module.exports = artist;
