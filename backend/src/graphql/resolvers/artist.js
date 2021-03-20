@@ -19,10 +19,9 @@ const getArtistById = async function(args, req) {
 
 const getArtistsById = async function(args, req) {
   const headers = header(req);
-  const params = { ids: args.ids };
-  const resp = await axios.get(`${spotifyBaseURL}/artists/${args.ids}`, { headers, params });
-  console.log(resp.data)
-  return resp.data;
+  const params = { ids: args.ids.toString() };
+  const resp = await axios.get(`${spotifyBaseURL}/artists`, { headers, params });
+  return resp.data.artists;
 };
 
 const artist = {
