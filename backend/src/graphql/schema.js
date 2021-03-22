@@ -15,6 +15,8 @@ const schema = buildSchema(`
     trackAudioFeature(id: ID!): AudioFeature,
     tracksAudioFeatures(ids: [ID]!): [AudioFeature],
     markets: [String],
+    user(user_id: ID!): User,
+    me: User,
   },
   type Image {
     height: Int,
@@ -97,6 +99,16 @@ const schema = buildSchema(`
     analysis_url: String,
     duration_ms: Int,
     time_signature: Int,
+  }
+  type User {
+    id: ID!,
+    display_name: String,
+    external_urls: External_Urls,
+    followers: Followers,
+    href: String,
+    images: Image,
+    type: String,
+    uri: String,
   }
 `);
 
