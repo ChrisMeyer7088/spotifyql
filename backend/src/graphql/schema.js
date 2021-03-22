@@ -10,6 +10,10 @@ const schema = buildSchema(`
     albums(ids: [ID]!, market: String): [Album],
     album(id: ID!, market: String): Album,
     albumTracks(id: ID!, market: String, limit: Int, offset: Int): [Track],
+    track(id: ID!, market: String): Track,
+    tracks(ids: [ID]!, market: String): [Track],
+    trackAudioFeature(id: ID!): AudioFeature,
+    tracksAudioFeatures(ids: [ID]!): [AudioFeature],
   },
   type Image {
     height: Int,
@@ -71,7 +75,27 @@ const schema = buildSchema(`
     track_number: Int,
     type: String,
     uri: String,
-    available_markets: [String]
+    available_markets: [String],
+  },
+  type AudioFeature {
+    id: ID!,
+    danceability: Float,
+    energy: Float,
+    key: Int,
+    loudness: Float,
+    mode: Int,
+    speechiness: Float,
+    acousticness: Float,
+    instrumentalness: Float,
+    liveness: Float,
+    valence: Float,
+    tempo: Float,
+    type: String,
+    uri: String,
+    track_href: String,
+    analysis_url: String,
+    duration_ms: Int,
+    time_signature: Int,
   }
 `);
 
