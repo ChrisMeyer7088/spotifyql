@@ -14,6 +14,7 @@ const schema = buildSchema(`
     tracks(ids: [ID]!, market: String): [Track],
     trackAudioFeature(id: ID!): AudioFeature,
     tracksAudioFeatures(ids: [ID]!): [AudioFeature],
+    markets: [String],
   },
   type Image {
     height: Int,
