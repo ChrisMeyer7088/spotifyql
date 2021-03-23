@@ -17,6 +17,12 @@ const schema = buildSchema(`
     markets: [String],
     user(user_id: ID!): User,
     me: User,
+    browseNewReleases(country: String, limit: Int, offset: Int): BrowseAlbum,
+    browseFeaturedPlaylists(country: String, locale: String, timestamp: String, limit: Int, offset: Int): BrowsePlaylist,
+    browseCategoryPlaylists(category_id: ID!, country: String, limit: Int, offset: Int): BrowsePlaylist,
+    getCategory(category_id: ID!, country: String, locale: String): Category,
+    getCategories(country: String, locale: String, limit: Int, offset: Int): BrowseCategories,
+    genres: [String],
   },
   type Image {
     height: Int,
@@ -32,6 +38,16 @@ const schema = buildSchema(`
   },
   type External_ID {
     isrc: String
+  },
+  type TrackNumber {
+    href: String,
+    total: Int,
+  },
+  type Category {
+    id: ID!,
+    href: String,
+    icons: [Image],
+    name: String,
   },
   type Artist {
     id: ID!,
@@ -58,7 +74,8 @@ const schema = buildSchema(`
     release_date_precision: String,
     total_tracks: Int,
     type: String,
-    uri: String
+    uri: String,
+    available_markets: [String],
   },
   type Track {
     id: ID!,
@@ -79,6 +96,22 @@ const schema = buildSchema(`
     type: String,
     uri: String,
     available_markets: [String],
+  },
+  type Playlist {
+    id: ID!,
+    name: String,
+    collaborative: Boolean,
+    description: String,
+    external_urls: External_Urls,
+    images: [Image],
+    href: String,
+    owner: User,
+    primary_color: String,
+    public: String,
+    snapshot_id: String,
+    tracks: TrackNumber,
+    type: String,
+    uri: String,
   },
   type AudioFeature {
     id: ID!,
@@ -109,6 +142,33 @@ const schema = buildSchema(`
     images: Image,
     type: String,
     uri: String,
+  },
+  type BrowseAlbum {
+    href: String,
+    items: [Album],
+    limit: Int,
+    next: String,
+    offset: Int,
+    previous: String,
+    total: Int,
+  },
+  type BrowsePlaylist {
+    href: String,
+    limit: Int,
+    next: String,
+    offset: Int,
+    previous: String,
+    total: Int,
+    items: [Playlist]
+  },
+  type BrowseCategories {
+    href: String,
+    limit: Int,
+    next: String,
+    offset: Int,
+    previous: String,
+    total: Int,
+    items: [Category]
   }
 `);
 
