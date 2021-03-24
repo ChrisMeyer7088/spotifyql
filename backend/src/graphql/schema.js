@@ -26,6 +26,7 @@ const schema = buildSchema(`
     show(id: ID!, market: String): Show,
     shows(ids: [ID]!, market: String): [Show],
     showEpisodes(id: ID!, market: String, limit: Int, offset: Int): BrowseEpisode,
+    search(q: String!, type: [String!]!, market: String, limit: Int, offset: Int): Search,
   },
   type Image {
     height: Int,
@@ -172,7 +173,43 @@ const schema = buildSchema(`
     previous: String,
     total: Int,
     items: [Category]
-  }
+  },
+  type BrowseEpisode {
+    href: String,
+    items: [Episode],
+    offset: Int,
+    limit: Int,
+    next: String,
+    previous: String,
+    total: Int,
+  },
+  type BrowseShow {
+    href: String,
+    items: [Show],
+    offset: Int,
+    limit: Int,
+    next: String,
+    previous: String,
+    total: Int,
+  },
+  type BrowseArtist {
+    href: String,
+    items: [Artist],
+    offset: Int,
+    limit: Int,
+    next: String,
+    previous: String,
+    total: Int,
+  },
+  type BrowseTrack {
+    href: String,
+    items: [Track],
+    offset: Int,
+    limit: Int,
+    next: String,
+    previous: String,
+    total: Int,
+  },
   type Show {
     id: ID!,
     name: String!,
@@ -209,14 +246,13 @@ const schema = buildSchema(`
     type: String,
     uri: String,
   },
-  type BrowseEpisode {
-    href: String,
-    items: [Episode],
-    offset: Int,
-    limit: Int,
-    next: String,
-    previous: String,
-    total: Int,
+  type Search {
+    albums: BrowseAlbum,
+    artists: BrowseArtist,
+    tracks: BrowseTrack,
+    playlists: BrowsePlaylist,
+    shows: BrowseShow,
+    episodes: BrowseEpisode,
   },
 `);
 
