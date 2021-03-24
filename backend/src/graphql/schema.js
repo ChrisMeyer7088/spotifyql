@@ -27,6 +27,8 @@ const schema = buildSchema(`
     shows(ids: [ID]!, market: String): [Show],
     showEpisodes(id: ID!, market: String, limit: Int, offset: Int): BrowseEpisode,
     search(q: String!, type: [String!]!, market: String, limit: Int, offset: Int): Search,
+    episode(id: ID!, market: String): Episode,
+    episodes(ids: [ID]!, market: String): [Episode],
   },
   type Image {
     height: Int,
