@@ -5,6 +5,7 @@ const market = require('./market')
 const user = require('./user')
 const browse = require('./browse')
 const show = require('./show')
+const search = require('./search')
 
 const root = {}
 
@@ -15,5 +16,6 @@ Object.assign(root, market)
 Object.assign(root, user)
 Object.assign(root, browse)
 Object.assign(root, show)
+Object.assign(root, search)
 
 module.exports = root
