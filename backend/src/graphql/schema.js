@@ -29,6 +29,8 @@ const schema = buildSchema(`
     search(q: String!, type: [String!]!, market: String, limit: Int, offset: Int): Search,
     episode(id: ID!, market: String): Episode,
     episodes(ids: [ID]!, market: String): [Episode],
+    topArtists(time_range: String, limit: Int, offset: Int): BrowseArtist,
+    topTracks(time_range: String, limit: Int, offset: Int): BrowseTrack,
   },
   type Image {
     height: Int,
