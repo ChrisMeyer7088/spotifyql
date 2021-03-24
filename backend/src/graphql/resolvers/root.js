@@ -6,6 +6,7 @@ const user = require('./user')
 const browse = require('./browse')
 const show = require('./show')
 const search = require('./search')
+const episode = require('./episode')
 
 const root = {}
 
@@ -17,5 +18,6 @@ Object.assign(root, user)
 Object.assign(root, browse)
 Object.assign(root, show)
 Object.assign(root, search)
+Object.assign(root, episode)
 
 module.exports = root
