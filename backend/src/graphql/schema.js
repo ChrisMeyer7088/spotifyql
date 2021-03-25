@@ -31,6 +31,10 @@ const schema = buildSchema(`
     episodes(ids: [ID]!, market: String): [Episode],
     topArtists(time_range: String, limit: Int, offset: Int): BrowseArtist,
     topTracks(time_range: String, limit: Int, offset: Int): BrowseTrack,
+    playlists(limit: Int, offset: Int): BrowsePlaylist,
+    playlist(playlist_id: ID!, market: String): Playlist,
+    playlistImages(playlist_id: ID!): [Image],
+    playlistTracks(playlist_id: ID!, market: String!, limit: Int, offset: Int): BrowseTrack,
   },
   type Image {
     height: Int,
@@ -52,14 +56,14 @@ const schema = buildSchema(`
     total: Int,
   },
   type Category {
-    id: ID!,
+    id: ID,
     href: String,
     icons: [Image],
     name: String,
   },
   type Artist {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     external_urls: External_Urls,
     followers: Followers,
     genres: [String],
@@ -70,8 +74,8 @@ const schema = buildSchema(`
     uri: String
   },
   type Album {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     album_group: String,
     album_type: String,
     artists: [Artist],
@@ -86,8 +90,8 @@ const schema = buildSchema(`
     available_markets: [String],
   },
   type Track {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     album: Album,
     artists: [Artist],
     disc_number: Int,
@@ -106,7 +110,7 @@ const schema = buildSchema(`
     available_markets: [String],
   },
   type Playlist {
-    id: ID!,
+    id: ID,
     name: String,
     collaborative: Boolean,
     description: String,
@@ -122,7 +126,7 @@ const schema = buildSchema(`
     uri: String,
   },
   type AudioFeature {
-    id: ID!,
+    id: ID,
     danceability: Float,
     energy: Float,
     key: Int,
@@ -142,7 +146,7 @@ const schema = buildSchema(`
     time_signature: Int,
   }
   type User {
-    id: ID!,
+    id: ID,
     display_name: String,
     external_urls: External_Urls,
     followers: Followers,
@@ -215,8 +219,8 @@ const schema = buildSchema(`
     total: Int,
   },
   type Show {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     available_markets: [String],
     description: String,
     explicit: Boolean,
@@ -232,8 +236,8 @@ const schema = buildSchema(`
     uri: String,
   },
   type Episode {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     href: String,
     audio_preview_url: String,
     description: String,
