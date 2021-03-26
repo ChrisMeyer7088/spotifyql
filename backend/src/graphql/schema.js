@@ -1,6 +1,7 @@
 const { buildSchema } = require("graphql");
 
 const schema = buildSchema(`
+  "Operations for retrieving server-side information from spotify."
   type Query {
     artist(id: ID!): Artist,
     relatedArtists(id: ID!): [Artist],
@@ -35,6 +36,36 @@ const schema = buildSchema(`
     playlist(playlist_id: ID!, market: String): Playlist,
     playlistImages(playlist_id: ID!): [Image],
     playlistTracks(playlist_id: ID!, market: String!, limit: Int, offset: Int): BrowseTrack,
+    userPlaylists(user_id: ID!, limit: Int, offset: Int): BrowsePlaylist,
+  },
+  """
+  Operations for creating, updating and deleting server-side information. 
+  
+  Will require the appropriate scopes, for more information on spotify scopes visit: https://developer.spotify.com/documentation/general/guides/scopes/
+  """
+  type Mutation {
+    "Creates an empty playlist for the given user."
+    createPlaylist(user_id: ID!, name: String, public: Boolean, collaborative: Boolean, description: String): Playlist,
+    
+    """
+    Adds tracks to a given playlist via spotify uris.
+    
+    For more information on spotify types visit: https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids
+    """
+    addToPlaylist(playlist_id: ID!, position: Int, uris: [String]): Snapshot,
+    
+    "Changes a playlist details, returns operation status code."
+    changePlaylist(playlist_id: ID!, name: String, public: Boolean, collaborative: Boolean, description: String): String,
+
+    "Reorders a playlist's tracks."
+    reorderPlaylist(playlist_id: ID!, uris: [String], range_start: Int, inset_before: Int, ranger_length: Int): Snapshot,
+
+    """
+    Remove tracks from a given playlist via spotify uris.
+    
+    For more information on spotify types visit: https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids
+    """
+    removePlaylistTracks(playlist_id: ID!, uris: [String]): Snapshot,
   },
   type Image {
     height: Int,
@@ -50,6 +81,9 @@ const schema = buildSchema(`
   },
   type External_ID {
     isrc: String
+  },
+  type Snapshot {
+    snapshot_id: String!
   },
   type TrackNumber {
     href: String,
