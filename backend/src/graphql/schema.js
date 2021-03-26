@@ -1,6 +1,7 @@
 const { buildSchema } = require("graphql");
 
 const schema = buildSchema(`
+  "Operations for retrieving server-side information from spotify."
   type Query {
     artist(id: ID!): Artist,
     relatedArtists(id: ID!): [Artist],
@@ -31,6 +32,40 @@ const schema = buildSchema(`
     episodes(ids: [ID]!, market: String): [Episode],
     topArtists(time_range: String, limit: Int, offset: Int): BrowseArtist,
     topTracks(time_range: String, limit: Int, offset: Int): BrowseTrack,
+    playlists(limit: Int, offset: Int): BrowsePlaylist,
+    playlist(playlist_id: ID!, market: String): Playlist,
+    playlistImages(playlist_id: ID!): [Image],
+    playlistTracks(playlist_id: ID!, market: String!, limit: Int, offset: Int): BrowseTrack,
+    userPlaylists(user_id: ID!, limit: Int, offset: Int): BrowsePlaylist,
+  },
+  """
+  Operations for creating, updating and deleting server-side information. 
+  
+  Will require the appropriate scopes, for more information on spotify scopes visit: https://developer.spotify.com/documentation/general/guides/scopes/
+  """
+  type Mutation {
+    "Creates an empty playlist for the given user."
+    createPlaylist(user_id: ID!, name: String, public: Boolean, collaborative: Boolean, description: String): Playlist,
+    
+    """
+    Adds tracks to a given playlist via spotify uris.
+    
+    For more information on spotify types visit: https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids
+    """
+    addToPlaylist(playlist_id: ID!, position: Int, uris: [String]): Snapshot,
+    
+    "Changes a playlist details, returns operation status code."
+    changePlaylist(playlist_id: ID!, name: String, public: Boolean, collaborative: Boolean, description: String): String,
+
+    "Reorders a playlist's tracks."
+    reorderPlaylist(playlist_id: ID!, uris: [String], range_start: Int, inset_before: Int, ranger_length: Int): Snapshot,
+
+    """
+    Remove tracks from a given playlist via spotify uris.
+    
+    For more information on spotify types visit: https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids
+    """
+    removePlaylistTracks(playlist_id: ID!, uris: [String]): Snapshot,
   },
   type Image {
     height: Int,
@@ -47,19 +82,22 @@ const schema = buildSchema(`
   type External_ID {
     isrc: String
   },
+  type Snapshot {
+    snapshot_id: String!
+  },
   type TrackNumber {
     href: String,
     total: Int,
   },
   type Category {
-    id: ID!,
+    id: ID,
     href: String,
     icons: [Image],
     name: String,
   },
   type Artist {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     external_urls: External_Urls,
     followers: Followers,
     genres: [String],
@@ -70,8 +108,8 @@ const schema = buildSchema(`
     uri: String
   },
   type Album {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     album_group: String,
     album_type: String,
     artists: [Artist],
@@ -86,8 +124,8 @@ const schema = buildSchema(`
     available_markets: [String],
   },
   type Track {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     album: Album,
     artists: [Artist],
     disc_number: Int,
@@ -106,7 +144,7 @@ const schema = buildSchema(`
     available_markets: [String],
   },
   type Playlist {
-    id: ID!,
+    id: ID,
     name: String,
     collaborative: Boolean,
     description: String,
@@ -122,7 +160,7 @@ const schema = buildSchema(`
     uri: String,
   },
   type AudioFeature {
-    id: ID!,
+    id: ID,
     danceability: Float,
     energy: Float,
     key: Int,
@@ -142,7 +180,7 @@ const schema = buildSchema(`
     time_signature: Int,
   }
   type User {
-    id: ID!,
+    id: ID,
     display_name: String,
     external_urls: External_Urls,
     followers: Followers,
@@ -215,8 +253,8 @@ const schema = buildSchema(`
     total: Int,
   },
   type Show {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     available_markets: [String],
     description: String,
     explicit: Boolean,
@@ -232,8 +270,8 @@ const schema = buildSchema(`
     uri: String,
   },
   type Episode {
-    id: ID!,
-    name: String!,
+    id: ID,
+    name: String,
     href: String,
     audio_preview_url: String,
     description: String,
