@@ -37,6 +37,18 @@ const schema = buildSchema(`
     playlistImages(playlist_id: ID!): [Image],
     playlistTracks(playlist_id: ID!, market: String!, limit: Int, offset: Int): BrowseTrack,
     userPlaylists(user_id: ID!, limit: Int, offset: Int): BrowsePlaylist,
+    
+    "Gets followed artist."
+    myArtists(after: ID, limit: Int): BrowseArtist,
+
+    "Check if current user follows artists."
+    followsArtists(ids: [ID!]!): [Boolean],
+
+    "Check if current user follows users."
+    followsUsers(ids: [ID!]!): [Boolean],
+
+    "Check if users follows a playlist."
+    followsPlaylist(ids: [ID!]!, playlist_id: ID!): [Boolean],
   },
   """
   Operations for creating, updating and deleting server-side information. 
@@ -66,6 +78,24 @@ const schema = buildSchema(`
     For more information on spotify types visit: https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids
     """
     removePlaylistTracks(playlist_id: ID!, uris: [String]): Snapshot,
+
+    "Follows a given array of users."
+    followUsers(ids: [ID!]!): String,
+
+    "Follows a given array of artist."
+    followArtists(ids: [ID!]!): String,
+
+    "Follows a given playlist."
+    followPlaylist(playlist_id: ID!, public: Boolean): String,
+
+    "Unfollows given users."
+    unfollowUsers(ids: [ID!]!): String,
+
+    "Unfollows given artist."
+    unfollowArtists(ids: [ID!]!): String,
+
+    "Unfollows given playlist."
+    unfollowPlaylist(playlist_id: ID!): String,
   },
   type Image {
     height: Int,

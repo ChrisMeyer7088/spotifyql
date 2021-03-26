@@ -9,6 +9,7 @@ const search = require('./search')
 const episode = require('./episode')
 const personalization = require('./personalization')
 const playlist = require('./playlist')
+const follow = require('./follow')
 
 const root = {}
 
@@ -23,5 +24,6 @@ Object.assign(root, search)
 Object.assign(root, episode)
 Object.assign(root, personalization)
 Object.assign(root, playlist)
+Object.assign(root, follow)
 
 module.exports = root
