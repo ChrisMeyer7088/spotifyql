@@ -16,5 +16,5 @@ const search = async function(args, req) {
 };
 
 module.exports = {
-  search: search
+  search
 }

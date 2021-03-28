@@ -49,6 +49,18 @@ const schema = buildSchema(`
 
     "Check if users follows a playlist."
     followsPlaylist(ids: [ID!]!, playlist_id: ID!): [Boolean],
+
+    "Gets current player information."
+    player(market: ID, additional_types: [String]): Player,
+    
+    "Get's available devices."
+    devices: [Device],
+
+    "Get's currently playing track."
+    currentTrack(market: String!, additional_types: [String]): Player,
+
+    "Get's recently played track."
+    recentlyPlayed(limit: Int, after: ID, before: ID): [RecentlyPlayed],
   },
   """
   Operations for creating, updating and deleting server-side information. 
@@ -96,6 +108,36 @@ const schema = buildSchema(`
 
     "Unfollows given playlist."
     unfollowPlaylist(playlist_id: ID!): String,
+
+    "Plays the next track on a given device."
+    nextTrack(device_id: ID!): String,
+
+    "Plays the previous track on a given device."
+    previousTrack(device_id: ID!): String,
+
+    "Plays a track to the end of the playback queue."
+    addToQueue(uri: String!, device_id: ID!): String,
+
+    "Pauses a user's playback."
+    pausePlayback(device_id: ID!): String,
+
+    "Plays a user's playback."
+    playPlayback(device_id: ID!): String,
+
+    "Sets repeat mode for a user's playback."
+    repeatPlayer(device_id: ID!): String,
+
+    "Plays a user's playback."
+    seekTo(position_ms: Int, device_id: ID!): String,
+
+    "Toggle on shuffle mode for a user's playback."
+    shufflePlayer(state: Boolean, device_id: ID!): String,
+
+    "Sets a devices volume percentage."
+    volumeTo(volume_percent: Int, device_id: ID!): String,
+
+    "Transfers playback to a new device."
+    transferPlayback(device_ids: [ID!]!, play: Boolean): String,
   },
   type Image {
     height: Int,
@@ -326,6 +368,57 @@ const schema = buildSchema(`
     shows: BrowseShow,
     episodes: BrowseEpisode,
   },
+  type Device {
+    id: ID!,
+    name: String,
+    is_active: Boolean,
+    is_private_session: Boolean,
+    is_restricted: Boolean,
+    type: String,
+    volume_percent: Int,
+  },
+  type Context {
+    id: ID,
+    external_urls: External_Urls,
+    href: String,
+    type: String,
+    uri: String,
+  },
+  type PlayerItem {
+    album: Album,
+    artists: [Artist],
+    disc_number: Int,
+    duration_ms: Int,
+    explicit: Boolean,
+    external_urls: External_Urls,
+    href: String,
+    id: ID,
+    is_local: Boolean,
+    is_playable: Boolean,
+    linked_from: Context,
+    name: String,
+    popularity: Int,
+    preview_url: String,
+    track_number: Int,
+    type: String,
+    uri: String,
+  },
+  type Player {
+    device: Device,
+    context: Context,
+    shuffle_state: Boolean,
+    repeat_state: String,
+    timestamp: ID,
+    progress_ms: Int,
+    item: PlayerItem,
+    is_playing: Boolean,
+    currently_playing_type: String,
+  },
+  type RecentlyPlayed {
+    track: Track,
+    played_at: ID,
+    context: Context
+  }
 `);
 
 module.exports = schema;

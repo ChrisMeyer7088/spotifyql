@@ -71,6 +71,6 @@ module.exports = {
   browseFeaturedPlaylists: getFeaturedPlaylists,
   browseCategoryPlaylists: getCategoryPlaylists,
   getCategory: getBrowseCategory,
-  getCategories: getCategories,
+  getCategories,
   genres: getGenres
 };

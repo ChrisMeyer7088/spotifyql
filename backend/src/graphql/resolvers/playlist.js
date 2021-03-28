@@ -115,9 +115,9 @@ module.exports = {
   playlistTracks: getPlaylistTracks,
   playlists: getPlaylists,
   userPlaylists: getUserPlaylists,
-  createPlaylist: createPlaylist,
+  createPlaylist,
   addToPlaylist: addItemsToPlaylist,
-  changePlaylist: changePlaylist,
+  changePlaylist,
   reorderPlaylist: reorderPlaylistTracks,
   removePlaylistTracks: deletePlaylistTracks,
 };
