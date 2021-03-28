@@ -101,13 +101,13 @@ const unfollowPlaylist = async function(args, req) {
 
 module.exports = {
   myArtists: getFollowedArtist,
-  followsArtists: followsArtists,
-  followsUsers: followsUsers,
-  followsPlaylist: followsPlaylist,
-  followArtists: followArtists,
-  followUsers: followUsers,
-  followPlaylist: followPlaylist,
-  unfollowUsers: unfollowUsers,
-  unfollowArtists: unfollowArtists,
-  unfollowPlaylist: unfollowPlaylist
+  followsArtists,
+  followsUsers,
+  followsPlaylist,
+  followArtists,
+  followUsers,
+  followPlaylist,
+  unfollowUsers,
+  unfollowArtists,
+  unfollowPlaylist,
 };

@@ -26,6 +26,6 @@ const myTopTracks = async function(args, req) {
 };
 
 module.exports = {
-  myTopArtists: myTopArtists,
-  myTopTracks: myTopTracks,
+  myTopArtists,
+  myTopTracks,
 }
