@@ -11,9 +11,9 @@ const tokenValidator = (req, res, next) => {
     return;
   }
   next();
-}
+};
 
-router.use('/', [tokenValidator, graphqlHTTP({
+router.use('/graphql', [tokenValidator, graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
