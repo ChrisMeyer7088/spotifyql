@@ -41,17 +41,18 @@ app.get('/callback', async (req, res) => {
       })
     );
   } else {
-    const body = {
-      code,
-      grant_type: 'authorization_code',
-      redirect_uri, // Used for validation only no redirect will this time
-    };
+    const params = new URLSearchParams()
+    params.append('code', code)
+    params.append('grant_type', 'authorization_code')
+    params.append('redirect_uri', redirect_uri)
+
     const headers = {
-      'Authorization': 'Basic ' + (client_id + ':' + client_secret).toString('base64')
+      'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64')),
+      'Content-Type': 'application/x-www-form-urlencoded'
     };
     // Retrieve refresh token
     try {
-      const resp = await axios.post('https://accounts.spotify.com/api/token', body, { headers });
+      const resp = await axios.post('https://accounts.spotify.com/api/token', params, { headers });
       const { data } = resp;
 
       res.redirect('/#' +
@@ -61,7 +62,7 @@ app.get('/callback', async (req, res) => {
         })
       );
     } catch (err) {
-      console.error(err)
+      console.error(err.message)
       res.redirect('/#' +
         querystring.stringify({
           error: 'Token retrieval failed.'
