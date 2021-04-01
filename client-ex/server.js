@@ -14,7 +14,33 @@ app.use(express.static(__dirname + '/public'))
    .use(cors()) // CORS must be added on client application to successfully redirect
    .use(cookieParser());
 
-app.get('/login', (req, res) => {
+// Flow for grabbing access token from server
+app.get('/client-cred', async (req, res) => {
+  try {
+    const body = {
+      client_id,
+      client_secret
+    };
+    const resp = await axios.post(process.env.SPOTIFYQL_ENDPOINT + '/token', body);
+    const { data } = resp;
+
+    res.redirect('/#' +
+      querystring.stringify({
+        access_token: data.access_token,
+      })
+    );
+  } catch (err) {
+    console.error(err);
+    res.redirect('/#' +
+      querystring.stringify({
+        error: 'Something went wrong fetching token'
+      })
+    );
+  }
+});
+
+
+app.get('/auth-flow', (req, res) => {
   try {
     const scope = 'user-read-private user-read-email';
     res.redirect('https://accounts.spotify.com/authorize?' +

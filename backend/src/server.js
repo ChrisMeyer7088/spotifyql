@@ -3,8 +3,8 @@ const morgan = require('morgan');
 const { port } = require('./config');
 const routes = require('./routes');
 const cors = require('cors');
-
 const app = express();
+
 app.use(morgan(':method :url :status :response-time ms'))
   .use(express.json())
   .use(cors())
