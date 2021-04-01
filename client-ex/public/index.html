@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spotify Authorization Code example</title>
+    <title>Spotify Authorization Examples</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body>
-    <div id="login">
+    <div>
+      <h1>This is an example of the Client Credential flow hosted by SpotifyQL</h1>
+      <a href="/client-cred" class="btn btn-primary">Client Credential Flow</a>
+    </div>
+
+    <div>
       <h1>This is an example of the Authorization Code flow</h1>
-      <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+      <a href="/auth-flow" class="btn btn-primary">Authorization Code Flow</a>
     </div>
 
     <div id="oauth-container" class="hide">
@@ -40,7 +45,7 @@
       if(error) {
         alert('Something went wrong during authentication')
       }
-      if (access_token && refresh_token) {
+      if (access_token || refresh_token) {
         $('#access-token').text(access_token)
         $('#refresh-token').text(refresh_token)
         $('#oauth-container').removeClass('hide')
