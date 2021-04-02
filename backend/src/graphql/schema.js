@@ -8,9 +8,16 @@ const schema = buildSchema(`
     artists(ids: [ID!]!): [Artist],
     artistAlbums(id: ID!, market: String, limit: Int, offset: String, include_groups: String): [Album],
     artistTopTracks(id: ID!, market: String!): [Track],
+    
+    "Retrieves a list of albums from an array of IDs."
     albums(ids: [ID]!, market: String): [Album],
+    
+    "Retrieves an album by a given ID."
     album(id: ID!, market: String): Album,
+    
+    "Retrieves tracks associated with a given album ID."
     albumTracks(id: ID!, market: String, limit: Int, offset: Int): [Track],
+    
     track(id: ID!, market: String): Track,
     tracks(ids: [ID]!, market: String): [Track],
     trackAudioFeature(id: ID!): AudioFeature,
