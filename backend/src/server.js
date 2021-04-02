@@ -18,3 +18,5 @@ process.on('SIGTERM', () => {
     console.log('HTTP server closed');
   });
 });
+
+module.exports = app;

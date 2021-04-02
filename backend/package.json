@@ -4,7 +4,7 @@
   "description": "A graphQL intermediary layer of spotify",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon -r dotenv/config ./src/server.js"
   },
   "repository": {
@@ -26,7 +26,10 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
     "dotenv": "^8.2.0",
+    "mocha": "^8.3.2",
     "nodemon": "^2.0.7"
   }
 }
