@@ -5,7 +5,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
-      - REDIRECT_URI=localhost
+      PORT: "${PORT}"
     command: npx nodemon ./src/server.js
     volumes:
       - ./backend/src:/app/src
