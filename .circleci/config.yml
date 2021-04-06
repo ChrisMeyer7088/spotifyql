@@ -6,9 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: installation
-          command:
-            - cd backend && npm install && source .env
+          name: install
+          command: cd backend && npm install && source .env
+      - run:
           name: setup environment
           command: source .env && echo ${CLIENT_ID}
           environment:
