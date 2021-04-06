@@ -6,8 +6,12 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install
-          command: cd backend && npm install
+          name: setup
+          command: cd backend && npm install && source .env
+          command: echo ${CLIENT_ID}
+          environment:
+            CLIENT_ID: "${CLIENT_SECRET}"
+            CLIENT_SECRET: "${CLIENT_ID}"
       - run:
           name: test
           command: cd backend && npm run test
