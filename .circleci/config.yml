@@ -8,6 +8,9 @@ jobs:
       - run:
           name: install
           command: cd backend && npm install
+          environment:
+            CLIENT_ID: ${CLIENT_SECRET}
+            CLIENT_SECRET: ${CLIENT_ID}
       - run:
           name: test
           command: cd backend && npm run test
